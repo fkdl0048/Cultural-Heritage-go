@@ -125,6 +125,7 @@ GameObject:
   - component: {fileID: 8030622}
   - component: {fileID: 8030621}
   - component: {fileID: 8030625}
+  - component: {fileID: 8030626}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -214,6 +215,17 @@ MonoBehaviour:
   startingDroids: 5
   minRange: 5
   maxRange: 50
+--- !u!114 &8030626
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 8030620}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 273be0f419a28394b8fbfb5945673458, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &51464776 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 1589080780349302, guid: da4c35291f8065643a84f15ad26eb3d4,
