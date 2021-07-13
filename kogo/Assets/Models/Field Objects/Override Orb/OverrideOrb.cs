@@ -72,41 +72,144 @@ public class OverrideOrb : MonoBehaviour {
     }
 
     private void UpdateInputStatus(){
-        #if UNITY
+#if UNITY_EDITOR
+        if (Input.GetMouseButtonDown(0))
+        {
+            inputStatus = InputStatus.Grabbing;
+        }
+        else if (Input.GetMouseButton(0))
+        {
+            inputStatus = InputStatus.Holding;
+        }
+        else if (Input.GetMouseButtonUp(0))
+        {
+            inputStatus = InputStatus.Releasing;
+        }
+        else
+        {
+            inputStatus = InputStatus.None;
+        }
+#endif
+#if NOT_UNITY_EDITOR
+        if (Input.GetTouch(0).phase == TouchPhase.Began)
+        {
+            inputStatus = InputStatus.Grabbing;
+        }
+        else if (Input.GetTouch(0).phase == TouchPhase.Ended)
+        {
+            inputStatus = InputStatus.Releasing;
+        }
+        else if (Input.touchCount == 1)
+        {
+            inputStatus = InputStatus.Holding;
+        }
+        else
+        {
+            inputStatus = InputStatus.None;
+        }
+#endif
 
-        #endif
-        #if NOT_UNITY_EDITOR
-        #endif
-        #if UNITY
     }
 
     private void FollowInput()
     {
+        Vector3 inputPos = GetInputPosition();
+        inputPos.z = Camera.main.nearClipPlane * 7.5f;
+        Vector3 pos = Camera.main.ScreenToWorldPoint(inputPos);
 
+        transform.localPosition = Vector3.Lerp(transform.localPosition, pos, 50.0f * Time.deltaTime);
     }
 
     private void Grab()
     {
+        Ray ray = Camera.main.ScreenPointToRay(GetInputPosition());
+        RaycastHit point;
 
+        if (Physics.Raycast(ray, out point, 100.0f) && point.transform == transform)
+        {
+            holding = true;
+            transform.parent = null;
+        }
     }
 
     private void Drag()
     {
-
+        lastX = GetInputPosition().x;
+        lastY = GetInputPosition().y;
     }
 
     private void Release()
     {
-
+        if (lastY < GetInputPosition().y)
+        {
+            Throw(GetInputPosition());
+        }
     }
 
     private Vector2 GetInputPosition()
     {
+        Vector2 result = new Vector2();
 
+#if UNITY_EDITOR
+        result = Input.mousePosition;
+#endif
+#if NOT_UNITY_EDITOR
+        result = Input.GetTouch(0).position;
+#endif
+
+        return result;
+
+    }
+
+    private void Throw(Vector2 targetPos)
+    {
+        rigidbody.useGravity = true;
+        trackingCollisions = true;
+
+        float yDiff = (targetPos.y - lastY) / Screen.height * 100;
+        float speed = throwSpeed * yDiff;
+
+        float x = (targetPos.x / Screen.width) - (lastX / Screen.width);
+        x = Mathf.Abs(GetInputPosition().x - lastX) / Screen.width * 100 * x;
+
+        Vector3 direction = new Vector3(x, 0.0f, 1.0f);
+        direction = Camera.main.transform.TransformDirection(direction);
+
+        rigidbody.AddForce((direction * speed / 2.0f) + Vector3.up * speed);
+
+        audioSource.PlayOneShot(throwSound);
+
+        released = true;
+        holding = false;
+
+        Invoke("PowerDown", stallTime);
     }
 
     private void PowerDown()
     {
+        CaptureSceneManger manager = FindObjectOfType<CaptureSceneManger>();
+        if (manager != null)
+        {
+            manager.OrbDestroyed();
+        }
         Destroy(gameObject);
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (!trackingCollisions)
+        {
+            return;
+        }
+        trackingCollisions = false;
+        if (collision.gameObject.CompareTag(PocketDroidsContants.TAG_DROID))
+        {
+            audioSource.PlayOneShot(successSound);
+        }
+        else
+        {
+            audioSource.PlayOneShot(dropSound);
+        }
+        Invoke("PowerDown", collisionStallTime);
     }
 }
