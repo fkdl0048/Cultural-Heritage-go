@@ -7,7 +7,10 @@ public class WorldSceneManger : PocketDroidsSceneManger  {
 
     public override void droidTapped(GameObject droid)
     {
-        SceneManager.LoadScene(PocketDroidsContants.SCENE_CAPTURE, LoadSceneMode.Additive);
+
+        List<GameObject> list = new List<GameObject>();
+        list.Add(droid);
+        SceneTransitionManager.Instance.GoToScene(PocketDroidsContants.SCENE_CAPTURE, list);
     }
 
     public override void playerTapped(GameObject player)
