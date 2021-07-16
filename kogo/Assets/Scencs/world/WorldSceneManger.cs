@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class WorldSceneManger : PocketDroidsSceneManger  {
+    private GameObject droid;
+    private AsyncOperation loadScene;
 
     public override void droidTapped(GameObject droid)
     {
@@ -17,14 +19,4 @@ public class WorldSceneManger : PocketDroidsSceneManger  {
     {
 
     }
-
-    // Use this for initialization
-    void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 }
