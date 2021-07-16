@@ -43,6 +43,7 @@ public class CaptureSceneManger : PocketDroidsSceneManger {
             if (status != CaptureSceneStatus.Successful)
             {
                 status = CaptureSceneStatus.Failed;
+                Invoke("MoveToWorldScene", 2.0f);
             }
         }
         else {
@@ -63,6 +64,11 @@ public class CaptureSceneManger : PocketDroidsSceneManger {
     public override void droidCollision(GameObject droid, Collision other)
     {
         status = CaptureSceneStatus.Successful;
+        Invoke("MoveToWorldScene", 2.0f);
+    }
+
+    private void MoveToWorldScene()
+    {
         SceneTransitionManager.Instance.GoToScene(PocketDroidsContants.SCENE_WORLD, new List<GameObject>());
     }
 }

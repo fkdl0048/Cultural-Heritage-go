@@ -21,12 +21,7 @@ public class Droid : MonoBehaviour {
         Assert.IsNotNull(crySound);
     }
 
-    private void Start()
-    {
-        DontDestroyOnLoad(this);
-    }
-
-    public float SpawnRateP {
+    public float SpawnRate {
         get { return spawnRate; }
     }
 
@@ -44,6 +39,11 @@ public class Droid : MonoBehaviour {
 
     public int Hp {
         get { return hp; }
+    }
+
+    public AudioClip CrySound
+    {
+        get { return crySound; }
     }
 
     private void OnMouseDown()
