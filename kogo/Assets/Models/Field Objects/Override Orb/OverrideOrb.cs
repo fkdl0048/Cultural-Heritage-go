@@ -71,25 +71,6 @@ public class OverrideOrb : MonoBehaviour {
     }
 
     private void UpdateInputStatus(){
-#if UNITY_EDITOR
-        if (Input.GetMouseButtonDown(0))
-        {
-            inputStatus = InputStatus.Grabbing;
-        }
-        else if (Input.GetMouseButton(0))
-        {
-            inputStatus = InputStatus.Holding;
-        }
-        else if (Input.GetMouseButtonUp(0))
-        {
-            inputStatus = InputStatus.Releasing;
-        }
-        else
-        {
-            inputStatus = InputStatus.None;
-        }
-#endif
-#if NOT_UNITY_EDITOR
         if (Input.GetTouch(0).phase == TouchPhase.Began)
         {
             inputStatus = InputStatus.Grabbing;
@@ -106,7 +87,42 @@ public class OverrideOrb : MonoBehaviour {
         {
             inputStatus = InputStatus.None;
         }
-#endif
+        //#if UNITY_EDITOR
+        //        if (Input.GetMouseButtonDown(0))
+        //        {
+        //            inputStatus = InputStatus.Grabbing;
+        //        }
+        //        else if (Input.GetMouseButton(0))
+        //        {
+        //            inputStatus = InputStatus.Holding;
+        //        }
+        //        else if (Input.GetMouseButtonUp(0))
+        //        {
+        //            inputStatus = InputStatus.Releasing;
+        //        }
+        //        else
+        //        {
+        //            inputStatus = InputStatus.None;
+        //        }
+        //#endif
+        //#if NOT_UNITY_EDITO
+        //        if (Input.GetTouch(0).phase == TouchPhase.Began)
+        //        {
+        //            inputStatus = InputStatus.Grabbing;
+        //        }
+        //        else if (Input.GetTouch(0).phase == TouchPhase.Ended)
+        //        {
+        //            inputStatus = InputStatus.Releasing;
+        //        }
+        //        else if (Input.touchCount == 1)
+        //        {
+        //            inputStatus = InputStatus.Holding;
+        //        }
+        //        else
+        //        {
+        //            inputStatus = InputStatus.None;
+        //        }
+        //#endif
 
     }
 
@@ -148,13 +164,13 @@ public class OverrideOrb : MonoBehaviour {
     private Vector2 GetInputPosition()
     {
         Vector2 result = new Vector2();
-
-#if UNITY_EDITOR
-        result = Input.mousePosition;
-#endif
-#if NOT_UNITY_EDITOR
         result = Input.GetTouch(0).position;
-#endif
+//#if UNITY_EDITOR
+//        result = Input.mousePosition;
+//#endif
+//#if NOT_UNITY_EDITOR
+//        result = Input.GetTouch(0).position;
+//#endif
 
         return result;
 
