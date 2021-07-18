@@ -39,7 +39,6 @@ public class CaptureSceneUIManger : MonoBehaviour {
     private void HandleInProgress()
     {
         UpdateVisibleScreen();
-        orbCountText.text = manager.CurrentThrowAttempts.ToString();
     }
 
     private void HandleSuccess()

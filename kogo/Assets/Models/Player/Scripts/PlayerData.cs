@@ -9,13 +9,13 @@ public class PlayerData {
     private int requiredXp;
     private int levelBase;
     private int lvl;
-    //private List<DroidData> droids;
+    private List<DroidData> droids;
 
     public int Xp { get { return xp; } }
     public int RequiredXp { get { return requiredXp; } }
     public int LevelBase { get { return levelBase; } }
     public int Lvl { get { return lvl; } }
-    //public List<DroidData> Droids { get { return droids; } }
+    public List<DroidData> Droids { get { return droids; } }
 
     public PlayerData(Player player)
     {
@@ -24,14 +24,14 @@ public class PlayerData {
         levelBase = player.LevelBase;
         lvl = player.Lvl;
 
-        //foreach (GameObject droidObject in player.Droids)
-        //{
-        //    Droid droid = droidObject.GetComponent<Droid>();
-        //    if (droid != null)
-        //    {
-        //        DroidData data = new DroidData(droid);
-        //        droids.Add(data);
-        //    }
-        //}
+        foreach (GameObject droidObject in player.Droids)
+        {
+            Droid droid = droidObject.GetComponent<Droid>();
+            if (droid != null)
+            {
+                DroidData data = new DroidData(droid);
+                droids.Add(data);
+            }
+        }
     }
 }

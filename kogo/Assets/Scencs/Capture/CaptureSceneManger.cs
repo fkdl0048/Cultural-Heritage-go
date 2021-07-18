@@ -4,52 +4,20 @@ using UnityEngine;
 
 public class CaptureSceneManger : PocketDroidsSceneManger {
 
-    [SerializeField] private int maxThrowAttempts = 3;
-    [SerializeField] private GameObject orb;
     [SerializeField] private Vector3 spawnPoint;
 
-    private int currentTrowAttempts;
     private CaptureSceneStatus status = CaptureSceneStatus.InProgress;
-
-    public int MaxThrowAttempts {
-        get { return maxThrowAttempts; }
-    }
-
-    public int CurrentThrowAttempts
-    {
-        get { return currentTrowAttempts; }
-    }
 
     private void Start()
     {
-        CalculateMaxThrows();
-        currentTrowAttempts = maxThrowAttempts;
+
     }
 
     public CaptureSceneStatus Status {
         get { return status; }
     }
 
-    private void CalculateMaxThrows()
-    {
-        //maxThrowAttempts += GameManger.Instance.CurrentPlayer.Lvl / 5;
-    }
-
-    public void OrbDestroyed()
-    {
-        currentTrowAttempts--;
-        if (currentTrowAttempts <= 0)
-        {
-            if (status != CaptureSceneStatus.Successful)
-            {
-                status = CaptureSceneStatus.Failed;
-                Invoke("MoveToWorldScene", 2.0f);
-            }
-        }
-        else {
-            Instantiate(orb, spawnPoint, Quaternion.identity);
-        }
-    }
+    //Invoke("MoveToWorldScene", 2.0f);
 
     public override void droidTapped(GameObject droid)
     {

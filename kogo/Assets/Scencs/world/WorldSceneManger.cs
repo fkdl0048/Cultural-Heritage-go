@@ -17,6 +17,6 @@ public class WorldSceneManger : PocketDroidsSceneManger  {
 
     public override void playerTapped(GameObject player)
     {
-
+        //추후에 추가 플레이어 텝
     }
 }
