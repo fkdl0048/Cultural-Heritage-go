@@ -2,11 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MoveWorld : MonoBehaviour {
+public class correct : MonoBehaviour {
 
-    private void OnMouseDown()
+    [SerializeField] private GameObject successScreen;
+
+    public void Btn()
     {
-        Move();
+        successScreen.SetActive(false);
+        Invoke("Move", 2.0f);
+        
     }
 
     public void Move()
