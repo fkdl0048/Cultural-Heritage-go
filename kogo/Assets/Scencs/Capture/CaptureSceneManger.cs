@@ -23,6 +23,8 @@ public class CaptureSceneManger : PocketDroidsSceneManger {
     public void correct()
     {
         status = CaptureSceneStatus.Successful;
+        GameManger.Instance.CurrentPlayer.AddDiscovered(1);
+        GameManger.Instance.CurrentPlayer.Test = false;
         Invoke("MoveToWorldScene", 2.0f);
     }
 

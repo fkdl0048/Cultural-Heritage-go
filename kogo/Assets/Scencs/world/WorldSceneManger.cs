@@ -18,5 +18,6 @@ public class WorldSceneManger : PocketDroidsSceneManger  {
     public override void playerTapped(GameObject player)
     {
         //추후에 추가 플레이어 텝
+        //zoom 눌러서 현재 위치 크게 파악하기..
     }
 }
