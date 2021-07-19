@@ -10,8 +10,6 @@ public class CaptureSceneManger : PocketDroidsSceneManger {
         get { return status; }
     }
 
-    //Invoke("MoveToWorldScene", 2.0f);
-
     public override void droidTapped(GameObject droid)
     {
         print("CaptureSceneManger.PlayerTapped activated");
@@ -20,6 +18,18 @@ public class CaptureSceneManger : PocketDroidsSceneManger {
     public override void playerTapped(GameObject player)
     {
         print("CaptureSceneManger.droidTapped activated");
+    }
+
+    public void correct()
+    {
+        status = CaptureSceneStatus.Successful;
+        Invoke("MoveToWorldScene", 2.0f);
+    }
+
+    public void wrong()
+    {
+        status = CaptureSceneStatus.Failed;
+        Invoke("MoveToWorldScene", 2.0f);
     }
 
     private void MoveToWorldScene()
