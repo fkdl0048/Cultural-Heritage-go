@@ -7,7 +7,7 @@ using UnityEngine.Assertions;
 public class UIManager : MonoBehaviour {
 
     [SerializeField] private Text discovered; //xp
-    [SerializeField] private GameObject menu;
+    //[SerializeField] private GameObject menu;
     [SerializeField] private AudioClip menuBtnSound;
 
     private AudioSource audioSource;
@@ -18,7 +18,7 @@ public class UIManager : MonoBehaviour {
 
         Assert.IsNotNull(audioSource);
         Assert.IsNotNull(discovered);
-        Assert.IsNotNull(menu);
+        //Assert.IsNotNull(menu);
         Assert.IsNotNull(menuBtnSound);
     }
 
@@ -49,8 +49,8 @@ public class UIManager : MonoBehaviour {
 //        togleMenu();  
     }
 
-    public void togleMenu()
-    {
-        menu.SetActive(!menu.activeSelf);
-    }
+    //public void togleMenu()
+    //{
+    //    menu.SetActive(!menu.activeSelf);
+    //}
 }

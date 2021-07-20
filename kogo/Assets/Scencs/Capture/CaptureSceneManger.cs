@@ -4,7 +4,17 @@ using UnityEngine;
 
 public class CaptureSceneManger : PocketDroidsSceneManger {
 
+    [SerializeField] private AudioClip yes;
+    [SerializeField] private AudioClip no;
+
     private CaptureSceneStatus status = CaptureSceneStatus.InProgress;
+    private AudioSource audio;
+
+
+    private void Awake()
+    {
+        audio = GetComponent<AudioSource>();
+    }
 
     public CaptureSceneStatus Status {
         get { return status; }
@@ -22,6 +32,7 @@ public class CaptureSceneManger : PocketDroidsSceneManger {
 
     public void correct()
     {
+        audio.PlayOneShot(yes);
         status = CaptureSceneStatus.Successful;
         GameManger.Instance.CurrentPlayer.AddDiscovered(1);
         GameManger.Instance.CurrentPlayer.Test = false;
@@ -30,6 +41,7 @@ public class CaptureSceneManger : PocketDroidsSceneManger {
 
     public void wrong()
     {
+        audio.PlayOneShot(no);
         status = CaptureSceneStatus.Failed;
         Invoke("MoveToWorldScene", 2.0f);
     }
