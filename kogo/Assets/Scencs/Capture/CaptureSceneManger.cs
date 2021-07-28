@@ -4,51 +4,20 @@ using UnityEngine;
 
 public class CaptureSceneManger : PocketDroidsSceneManger {
 
-    [SerializeField] private int maxThrowAttempts = 3;
-    [SerializeField] private GameObject orb;
-    [SerializeField] private Vector3 spawnPoint;
+    [SerializeField] private AudioClip yes;
+    [SerializeField] private AudioClip no;
 
-    private int currentTrowAttempts;
     private CaptureSceneStatus status = CaptureSceneStatus.InProgress;
+    private AudioSource audio;
 
-    public int MaxThrowAttempts {
-        get { return maxThrowAttempts; }
-    }
 
-    public int CurrentThrowAttempts
+    private void Awake()
     {
-        get { return currentTrowAttempts; }
-    }
-
-    private void Start()
-    {
-        CalculateMaxThrows();
-        currentTrowAttempts = maxThrowAttempts;
+        audio = GetComponent<AudioSource>();
     }
 
     public CaptureSceneStatus Status {
         get { return status; }
-    }
-
-    private void CalculateMaxThrows()
-    {
-        //maxThrowAttempts += GameManger.Instance.CurrentPlayer.Lvl / 5;
-    }
-
-    public void OrbDestroyed()
-    {
-        currentTrowAttempts--;
-        if (currentTrowAttempts <= 0)
-        {
-            if (status != CaptureSceneStatus.Successful)
-            {
-                status = CaptureSceneStatus.Failed;
-                Invoke("MoveToWorldScene", 2.0f);
-            }
-        }
-        else {
-            Instantiate(orb, spawnPoint, Quaternion.identity);
-        }
     }
 
     public override void droidTapped(GameObject droid)
@@ -61,9 +30,19 @@ public class CaptureSceneManger : PocketDroidsSceneManger {
         print("CaptureSceneManger.droidTapped activated");
     }
 
-    public override void droidCollision(GameObject droid, Collision other)
+    public void correct()
     {
+        audio.PlayOneShot(yes);
         status = CaptureSceneStatus.Successful;
+        GameManger.Instance.CurrentPlayer.AddDiscovered(1);
+        GameManger.Instance.CurrentPlayer.Test = false;
+        Invoke("MoveToWorldScene", 2.0f);
+    }
+
+    public void wrong()
+    {
+        audio.PlayOneShot(no);
+        status = CaptureSceneStatus.Failed;
         Invoke("MoveToWorldScene", 2.0f);
     }
 

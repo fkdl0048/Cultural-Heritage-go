@@ -6,25 +6,21 @@ using System.IO;
 
 public class Player : MonoBehaviour {
 
-    [SerializeField] private int xp = 0;
-    [SerializeField] private int requiredXp = 100;
-    [SerializeField] private int levelBase = 100;
+    [SerializeField] private int discovered = 0;
+    [SerializeField] private bool test;
     [SerializeField] private List<GameObject> droids = new List<GameObject>();
-    private int lvl = 1;
 
     private string path;
 
-    public int Xp {
-        get { return xp; }
-    }
-
-    public int RequiredXp {
-        get { return requiredXp; }
-    }
-
-    public int LevelBase
+    public int Discovered
     {
-        get { return levelBase; }
+        get { return discovered; }
+    }
+
+    public bool Test //삭제 테스트
+    {
+        get { return test; }
+        set { test = value; }
     }
 
     public List<GameObject> Droids
@@ -32,35 +28,35 @@ public class Player : MonoBehaviour {
         get { return droids; }
     }
 
-    public int Lvl {
-        get { return lvl; }
-    }
 
     private void Start()
     {
-        path = Application.persistentDataPath + "/player.dat";
+        path = Application.persistentDataPath + "/player2.dat";
         Load();
+        test = true;
     }
 
-    public void AddXp(int xp)
+    public void AddDiscovered(int discovered) //발견한 문화재로 수정
     {
-        this.xp += Mathf.Max(0, xp);
-        InitLevelData();
+        this.discovered += Mathf.Max(0, discovered);
+        //InitLevelData();
         Save();
     }
 
-    public void AddDroid(GameObject droid) {
-        if(droid)
-        droids.Add(droid);
+    public void AddDroid(GameObject droid) //droid삭제
+    {
+        if (droid)
+            droids.Add(droid);
         Save();
     }
 
-    private void InitLevelData()
-    {
-        lvl = (xp / levelBase) + 1;
-        requiredXp = levelBase * lvl;
-    }
+    //private void InitLevelData() //해당 지역 문화재? 
+    //{
+    //    lvl = (xp / levelBase) + 1;
+    //    requiredXp = levelBase * lvl;
+    //}
 
+    //데이터 저장 구간
     private void Save()
     {
         BinaryFormatter bf = new BinaryFormatter();
@@ -79,16 +75,11 @@ public class Player : MonoBehaviour {
             PlayerData data = (PlayerData)bf.Deserialize(file);
             file.Close();
 
-            xp = data.Xp;
-            requiredXp = data.RequiredXp;
-            levelBase = data.LevelBase;
-            lvl = data.Lvl;
-
-            //import player droids;
+            discovered = data.Discovered;
         }
-        else
-        {
-            InitLevelData();
-        }
+        //else
+        //{
+        //    InitLevelData();
+        //}
     }
 }

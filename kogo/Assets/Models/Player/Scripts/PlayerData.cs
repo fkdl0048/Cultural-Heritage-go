@@ -5,24 +5,15 @@ using UnityEngine;
 
 [Serializable]
 public class PlayerData {
-    private int xp;
-    private int requiredXp;
-    private int levelBase;
-    private int lvl;
+    private int discovered;
     private List<DroidData> droids;
 
-    public int Xp { get { return xp; } }
-    public int RequiredXp { get { return requiredXp; } }
-    public int LevelBase { get { return levelBase; } }
-    public int Lvl { get { return lvl; } }
+    public int Discovered { get { return discovered; } }
     public List<DroidData> Droids { get { return droids; } }
 
     public PlayerData(Player player)
     {
-        xp = player.Xp;
-        requiredXp = player.RequiredXp;
-        levelBase = player.LevelBase;
-        lvl = player.Lvl;
+        discovered = player.Discovered;
 
         foreach (GameObject droidObject in player.Droids)
         {

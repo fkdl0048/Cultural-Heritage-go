@@ -17,6 +17,4 @@ public class GameManger : Singleton<GameManger> {
             return currentPlayer;
         }
     }
-
-
 }

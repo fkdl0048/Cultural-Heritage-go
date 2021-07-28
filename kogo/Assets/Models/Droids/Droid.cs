@@ -58,17 +58,4 @@ public class Droid : MonoBehaviour {
             }
         }
     }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        PocketDroidsSceneManger[] managers = FindObjectsOfType<PocketDroidsSceneManger>();
-        audioSource.PlayOneShot(crySound);
-        foreach (PocketDroidsSceneManger pocketDroidsSceneManger in managers)
-        {
-            if (pocketDroidsSceneManger.gameObject.activeSelf)
-            {
-                pocketDroidsSceneManger.droidCollision(this.gameObject, collision);
-            }
-        }
-    }
 }

@@ -10,7 +10,6 @@ public class CaptureSceneUIManger : MonoBehaviour {
     [SerializeField] private GameObject successScreen;
     [SerializeField] private GameObject failScreen;
     [SerializeField] private GameObject gameScreen;
-    [SerializeField] private Text orbCountText;
 
     private void Awake()
     {
@@ -39,7 +38,6 @@ public class CaptureSceneUIManger : MonoBehaviour {
     private void HandleInProgress()
     {
         UpdateVisibleScreen();
-        orbCountText.text = manager.CurrentThrowAttempts.ToString();
     }
 
     private void HandleSuccess()

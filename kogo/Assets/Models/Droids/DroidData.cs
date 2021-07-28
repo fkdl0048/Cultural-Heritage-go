@@ -4,7 +4,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
-public class DroidData {
+public class DroidData
+{
     private float spawnRate;
     private float catchRate;
     private int attack;
